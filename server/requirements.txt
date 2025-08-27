@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+langchain
+requests
+chromadb
+sentence-transformers
+aiohttp
+python-dotenv 

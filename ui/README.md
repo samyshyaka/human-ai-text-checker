@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Human-AI Text Checker Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React frontend connects to your FastAPI backend with Llama API integration for human vs AI text detection.
 
-## Available Scripts
+## 🚀 Quick Start
 
-In the project directory, you can run:
+### 1. Start the Backend
+```bash
+cd server
+uvicorn main:app --reload
+```
+The backend will run at `http://127.0.0.1:8000`
 
-### `npm start`
+### 2. Start the Frontend
+```bash
+cd ui
+npm start
+```
+The frontend will run at `http://localhost:3000`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🔗 Integration Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### ✅ **Real AI Analysis**
+- **No more mock data** - Uses actual Llama API responses
+- **Real probabilities** - Gets exact AI vs Human percentages from Llama
+- **Detailed reasoning** - Shows why the AI made its decision
 
-### `npm test`
+### ✅ **Enhanced UI**
+- **Loading states** - Shows when AI is analyzing text
+- **Error handling** - Displays API errors gracefully
+- **Analysis details** - Expandable view of AI reasoning and source
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### ✅ **API Service**
+- **Health checks** - Verify backend connectivity
+- **Text analysis** - Send content to Llama API
+- **Error handling** - Graceful fallbacks for network issues
 
-### `npm run build`
+## 🧪 Testing the Connection
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Backend Health Check**: Click "Test Health Endpoint" in the sidebar
+2. **API Test**: Click "Test Simple Endpoint" to test Llama connectivity
+3. **Create Post**: Use the Create button to analyze real text
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📊 What You'll See
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **Before (Mock Data)**
+- Random percentages (50-100% Human)
+- No real analysis
+- No AI reasoning
 
-### `npm run eject`
+### **After (Real API)**
+- Exact probabilities from Llama (e.g., 73% AI, 27% Human)
+- Detailed AI reasoning
+- Source tracking (API vs fallback)
+- Real-time analysis
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🔧 Troubleshooting
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **CORS Issues**
+- Ensure backend has CORS middleware enabled
+- Check that frontend is running on `localhost:3000`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### **Connection Failed**
+- Verify backend is running on port 8000
+- Check API key configuration in `.env` file
+- Use the connection test in the sidebar
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### **Analysis Not Working**
+- Check backend logs for Llama API errors
+- Verify your API key has access to the model
+- Test with the `/debug/test-simple` endpoint
 
-## Learn More
+## 🎯 Next Steps
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. **Test the integration** with different text types
+2. **Customize the UI** styling as needed
+3. **Add more features** like batch analysis or history
+4. **Deploy** both frontend and backend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📁 File Structure
 
-### Code Splitting
+```
+ui/
+├── src/
+│   ├── services/
+│   │   └── api.js          # API communication
+│   ├── components/
+│   │   ├── CreatePost.js   # Text input & analysis
+│   │   ├── Post.js         # Display with AI results
+│   │   ├── PostList.js     # List of posts
+│   │   ├── Sidebar.js      # Navigation + connection test
+│   │   └── ConnectionTest.js # Backend connectivity test
+│   └── App.js              # Main app with real API integration
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The integration is now complete! Your React frontend will use the real Llama API through your FastAPI backend to provide genuine AI vs Human text analysis. 🦙✨

@@ -1,74 +1,83 @@
 import React, { useState } from 'react';
 import './App.css';
-import PostList from './components/PostList';
-import CreatePost from './components/CreatePost';
+import AnalysisList from './components/AnalysisList';
+import CreateAnalysis from './components/CreateAnalysis';
 import Sidebar from './components/Sidebar';
 
 function App() {
-  const [posts, setPosts] = useState([]);
+  const [analyses, setAnalyses] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const [search, setSearch] = useState("");
   const [nextId, setNextId] = useState(1);
 
-  const handleCreatePost = (post) => {
-    // Mock analysis: random percentages
-    const humanPercent = Math.floor(Math.random() * 51) + 50; // 50-100
-    const aiPercent = 100 - humanPercent;
-    setPosts([
+  const handleCreateAnalysis = (analysis) => {
+    // Analysis now comes with real AI analysis from the API
+    setAnalyses([
       {
-        ...post,
-        humanPercent,
-        aiPercent,
+        ...analysis,
         id: nextId,
       },
-      ...posts,
+      ...analyses,
     ]);
     setNextId(nextId + 1);
     setShowCreate(false);
   };
 
-  const handleDeletePost = (postToDelete) => {
-    setPosts(posts.filter(post => post.id !== postToDelete.id));
+  const handleCloseCreate = () => {
+    setShowCreate(false);
   };
 
-  const handleEditPost = (editedPost) => {
-    setPosts(posts.map(post => post.id === editedPost.id ? { ...post, ...editedPost } : post));
+  const handleDeleteAnalysis = (analysisToDelete) => {
+    setAnalyses(analyses.filter(analysis => analysis.id !== analysisToDelete.id));
   };
 
-  // Filter posts by search
-  const filteredPosts = posts.filter(post =>
-    post.title.toLowerCase().includes(search.toLowerCase()) ||
-    post.content.toLowerCase().includes(search.toLowerCase())
+  const handleEditAnalysis = (editedAnalysis) => {
+    setAnalyses(analyses.map(analysis => analysis.id === editedAnalysis.id ? { ...analysis, ...editedAnalysis } : analysis));
+  };
+
+  const handleNavigateHome = () => {
+    setShowCreate(false);
+  };
+
+  // Filter analyses by search
+  const filteredAnalyses = analyses.filter(analysis =>
+    analysis.title.toLowerCase().includes(search.toLowerCase()) ||
+    analysis.content.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="App">
       <header className="App-header">
         <div className="header-left">
-          <h1>Human|AI Score</h1>
+          <h1>AI vs Human Text Checker</h1>
         </div>
         <div className="header-center">
           <input
             className="search-bar"
             type="text"
-            placeholder="Search posts..."
+            placeholder="Search analyses..."
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
         </div>
         <div className="header-right">
-          <button className="create-btn" onClick={() => setShowCreate(true)}>Create</button>
-          <span className="header-icon notification-icon" title="Notifications">🔔</span>
-          <span className="header-icon profile-icon" title="Profile">👤</span>
+          <button className="create-btn" onClick={() => setShowCreate(true)}>Analyze Text</button>
+          <svg className="header-icon notification-icon" title="Notifications" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
+          </svg>
+          <svg className="header-icon profile-icon" title="Profile" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
         </div>
       </header>
       <div className="app-container">
-        <Sidebar />
+        <Sidebar onNavigateHome={handleNavigateHome} />
         <main className="main-content">
-          {showCreate && (
-            <CreatePost onCreatePost={handleCreatePost} />
+          {showCreate ? (
+            <CreateAnalysis onCreateAnalysis={handleCreateAnalysis} onClose={handleCloseCreate} />
+          ) : (
+            <AnalysisList analyses={filteredAnalyses} onDeleteAnalysis={handleDeleteAnalysis} onEditAnalysis={handleEditAnalysis} />
           )}
-          <PostList posts={filteredPosts} onDeletePost={handleDeletePost} onEditPost={handleEditPost} />
         </main>
       </div>
     </div>

@@ -1,34 +1,31 @@
 import React from 'react';
 
-function Sidebar() {
+function Sidebar({ onNavigateHome }) {
   return (
     <aside className="sidebar">
       <nav>
         <ul className="sidebar-main">
-          <li className="sidebar-item active">Home</li>
-          <li className="sidebar-item">Popular</li>
-          <li className="sidebar-item">Answers <span className="beta">BETA</span></li>
-          <li className="sidebar-item">Explore</li>
-          <li className="sidebar-item">All</li>
+          <li className="sidebar-item active" onClick={onNavigateHome}>
+            Home
+          </li>
+          <li className="sidebar-item">
+            About
+          </li>
+          <li className="sidebar-item">
+            Dashboard
+          </li>
         </ul>
+        
         <div className="sidebar-section">
-          <div className="sidebar-section-title">CUSTOM FEEDS</div>
-          <div className="sidebar-link">+ Create a custom feed</div>
+          <div className="sidebar-section-title">RECENT ANALYSES</div>
+          <div className="sidebar-link">Last analysis: 2 hours ago</div>
+          <div className="sidebar-link">Total analyses: 47</div>
         </div>
+        
         <div className="sidebar-section">
-          <div className="sidebar-section-title">RECENT</div>
-          <div className="sidebar-link">r/outlier_ai</div>
-          <div className="sidebar-link">r/alignerr</div>
-        </div>
-        <div className="sidebar-section">
-          <div className="sidebar-section-title">COMMUNITIES</div>
-          <div className="sidebar-link">+ Create a community</div>
-          <div className="sidebar-link">Manage communities</div>
-        </div>
-        <div className="sidebar-section">
-          <div className="sidebar-section-title">RESOURCES</div>
-          <div className="sidebar-link">About Reddit</div>
-          <div className="sidebar-link">Advertise</div>
+          <div className="sidebar-section-title">TOOLS</div>
+          <div className="sidebar-link">⚙️ Settings</div>
+          <div className="sidebar-link">❓ Help</div>
         </div>
       </nav>
     </aside>
