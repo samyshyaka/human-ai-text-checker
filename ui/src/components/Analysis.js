@@ -65,14 +65,14 @@ function Analysis({ analysis, onDelete, onEdit }) {
                   
                   {showAnalysis && (
                     <div className="analysis-content">
-                      <div className="analysis-source">
+                      {/* <div className="analysis-source">
                         <strong>Source:</strong> {analysis.analysis.source || 'Llama API'}
-                      </div>
-                      <div className="analysis-method">
+                      </div> */}
+                      {/* <div className="analysis-method">
                         <strong>Method:</strong> {analysis.analysis.extractionMethod || 'Direct API'}
-                      </div>
+                      </div> */}
                       <div className="analysis-reasoning">
-                        <strong>AI Reasoning:</strong>
+                        <strong>Reasoning:</strong>
                         <p>{analysis.analysis.reasoning || 'No reasoning provided'}</p>
                       </div>
                     </div>

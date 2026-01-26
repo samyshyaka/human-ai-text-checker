@@ -86,9 +86,9 @@ function CreateAnalysis({ onCreateAnalysis, onClose }) {
               disabled={isAnalyzing}
               rows={12}
             />
-            <div className="form-hint">
+            {/* <div className="form-hint">
               💡 Tip: The more content you provide, the more accurate the AI analysis will be.
-            </div>
+            </div> */}
           </div>
           
           {error && <div className="error-message">{error}</div>}
