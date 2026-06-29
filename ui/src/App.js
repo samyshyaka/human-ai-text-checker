@@ -3,12 +3,14 @@ import './App.css';
 import AnalysisList from './components/AnalysisList';
 import CreateAnalysis from './components/CreateAnalysis';
 import Sidebar from './components/Sidebar';
+import { apiService } from './services/api';
 
 function App() {
   const [analyses, setAnalyses] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const [search, setSearch] = useState("");
   const [nextId, setNextId] = useState(1);
+  const [improvingId, setImprovingId] = useState(null);
 
   const handleCreateAnalysis = (analysis) => {
     // Analysis now comes with real AI analysis from the API
@@ -33,6 +35,38 @@ function App() {
 
   const handleEditAnalysis = (editedAnalysis) => {
     setAnalyses(analyses.map(analysis => analysis.id === editedAnalysis.id ? { ...analysis, ...editedAnalysis } : analysis));
+  };
+
+  const handleImproveAnalysis = async (analysisToImprove) => {
+    setImprovingId(analysisToImprove.id);
+    try {
+      const response = await apiService.improveText(analysisToImprove.content);
+      const verification = response.verification || {};
+      const toPercent = (value) => {
+        const num = Number(value);
+        if (Number.isNaN(num)) return null;
+        return num <= 1 ? Math.round(num * 100) : Math.round(num);
+      };
+      const improvedHumanPercent = toPercent(verification.human_probability);
+      const improvedAiPercent = toPercent(verification.ai_probability);
+
+      setAnalyses(analyses.map(analysis =>
+        analysis.id === analysisToImprove.id
+          ? {
+              ...analysis,
+              improvedText: response.humanized_text,
+              improvedVerification: verification,
+              improvedHumanPercent,
+              improvedAiPercent,
+            }
+          : analysis
+      ));
+    } catch (error) {
+      console.error('Improve request failed:', error);
+      alert(error.message || 'Could not improve text. Please try again.');
+    } finally {
+      setImprovingId(null);
+    }
   };
 
   const handleNavigateHome = () => {
@@ -76,7 +110,13 @@ function App() {
           {showCreate ? (
             <CreateAnalysis onCreateAnalysis={handleCreateAnalysis} onClose={handleCloseCreate} />
           ) : (
-            <AnalysisList analyses={filteredAnalyses} onDeleteAnalysis={handleDeleteAnalysis} onEditAnalysis={handleEditAnalysis} />
+            <AnalysisList
+              analyses={filteredAnalyses}
+              onDeleteAnalysis={handleDeleteAnalysis}
+              onEditAnalysis={handleEditAnalysis}
+              onImproveAnalysis={handleImproveAnalysis}
+              improvingId={improvingId}
+            />
           )}
         </main>
       </div>

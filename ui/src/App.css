@@ -365,6 +365,34 @@ body {
   background: #e6eaf3;
   color: #183153;
 }
+.analysis-action-disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+.analysis-action-disabled:hover {
+  background: transparent;
+  color: inherit;
+}
+.analysis-improved {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0f7f0;
+  border-left: 4px solid #2e7d32;
+  border-radius: 4px;
+}
+.improved-verification {
+  font-size: 0.9em;
+  color: #2e7d32;
+  margin: 0.4rem 0 0.6rem;
+}
+.improved-scores {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+.analysis-improved p {
+  margin: 0.5rem 0 0;
+  white-space: pre-wrap;
+}
 
 .score-labels {
   display: flex;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Analysis from './Analysis';
 
-function AnalysisList({ analyses, onDeleteAnalysis, onEditAnalysis }) {
+function AnalysisList({ analyses, onDeleteAnalysis, onEditAnalysis, onImproveAnalysis, improvingId }) {
   return (
     <div className="analysis-list">
       {analyses.length === 0 ? (
@@ -25,7 +25,14 @@ function AnalysisList({ analyses, onDeleteAnalysis, onEditAnalysis }) {
         </div>
       ) : (
         analyses.map((analysis, idx) => (
-          <Analysis key={idx} analysis={analysis} onDelete={onDeleteAnalysis} onEdit={onEditAnalysis} />
+          <Analysis
+            key={idx}
+            analysis={analysis}
+            onDelete={onDeleteAnalysis}
+            onEdit={onEditAnalysis}
+            onImprove={onImproveAnalysis}
+            isImproving={improvingId === analysis.id}
+          />
         ))
       )}
     </div>

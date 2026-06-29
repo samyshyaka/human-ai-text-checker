@@ -67,6 +67,9 @@ logs/
 *.sqlite3
 chroma_db/
 
+# Dataset (large Kaggle file — keep locally, do not commit)
+server/AI_Human.csv
+
 # Temporary files
 *.tmp
 *.temp
